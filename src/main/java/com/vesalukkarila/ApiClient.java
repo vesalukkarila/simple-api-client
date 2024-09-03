@@ -10,12 +10,10 @@ import java.io.IOException;
 
 public class ApiClient {
 
-    //using try-with-resources make api call to apiUrl
     public User fetchUserData(String apiUrl) throws IOException {
         try(CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
             return httpClient.execute(new HttpGet(apiUrl), response -> {
                 String jsonResponse = EntityUtils.toString(response.getEntity());
-            // use gson to parse jsonresponse to User.class
                 Gson gson = new Gson();
                 return gson.fromJson(jsonResponse, User.class);
             });
